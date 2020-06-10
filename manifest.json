@@ -1,0 +1,25 @@
+{
+    "name": "EFT Drop Idler",
+    "version": "1.0",
+    "description": "Opens corresponding tarkov streams from 6/11/2020 to 6/22/2020",
+    "permissions": ["alarms", "tabs", "management"],
+    "background": {
+      "scripts": ["idle.js"],
+      "persistent": false
+    },
+    "page_action": {
+      "default_icon": {
+        "16": "images/icon.png",
+        "32": "images/icon.png",
+        "48": "images/icon.png",
+        "128": "images/icon.png"
+      }
+    },
+    "icons": {
+        "16": "images/icon.png",
+        "32": "images/icon.png",
+        "48": "images/icon.png",
+        "128": "images/icon.png"
+      },
+    "manifest_version": 2
+  }
