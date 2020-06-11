@@ -12,10 +12,10 @@ chrome.runtime.onInstalled.addListener(function()
 });
 
 
-//Set a routine to run ever 10 minutes
+//Set a routine to run every 10 minutes
 chrome.alarms.create("1min", {
-    delayInMinutes: 1,
-    periodInMinutes: 1
+    delayInMinutes: 10,
+    periodInMinutes: 10
   });
   
   chrome.alarms.onAlarm.addListener(function(alarm) 
@@ -61,7 +61,7 @@ function initializePlugin()
     var today = new Date();
     var month = today.getMonth() + 1
     var year = today.getFullYear()
-    var day = today.getDate() + 1
+    var day = today.getDate()
 
     if(month == 6 && year == 2020)
     {
