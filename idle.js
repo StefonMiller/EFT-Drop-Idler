@@ -12,21 +12,21 @@ chrome.runtime.onInstalled.addListener(function()
 });
 
 
-//Set a routine to run every 10 minutes
+//Set a routine to run every 30 minutes
 chrome.alarms.create("1min", {
-    delayInMinutes: 10,
-    periodInMinutes: 10
+    delayInMinutes: 30,
+    periodInMinutes: 30
   });
   
   chrome.alarms.onAlarm.addListener(function(alarm) 
   {
+    
     if (alarm.name === "1min") 
     {
         //Get all currently opened tabs
         getTabs().then(
             function(tbs)
             {
-                console.log(tbs);
 
                 //Loop through each tab, and check if any of them are the current stream we are supposed to have open
                 outer: for(i = 0; i < tbs.length; i++)
@@ -34,6 +34,7 @@ chrome.alarms.create("1min", {
                     //There should never be an error here, but in case there is just re initialize the plugin
                     try
                     {
+                        console.log("URL is " + url);
                         //If the tab we are supposed to have open is still running, close it.
                         if(tbs[i].url === url)
                         {
@@ -105,10 +106,8 @@ function getFirstStream(streams, channels)
             for(j = 0; j < channels.length; j++)
             {
                 name = streams[i].user_name.toLowerCase()
-                console.log("Testing " + name + " with " + channels[j])
                 if(name === channels[j])
                 {
-                    console.log("Found match between " + name + " and " + channels[j]);
                     break outer;
                 }
             }
@@ -135,7 +134,6 @@ function genToken(channels, callback)
 //Get a list of the top 100 tarkov streams
 function checkOnline(channels, token)
 {
-    console.log("Got token\t" + token);
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "https://api.twitch.tv/helix/streams?game_id=491931", true);
     xhr.setRequestHeader('Client-ID', '1swbh92vaxjly24it3cd07xc0du1e4');
@@ -145,7 +143,6 @@ function checkOnline(channels, token)
         let responseObj = xhr.responseText;
         jsonData = JSON.parse(responseObj);
         streams = jsonData.data;
-        console.log(streams);
         getFirstStream(streams, channels);
     };
 
@@ -155,10 +152,9 @@ function checkOnline(channels, token)
 
 //Open a url in a new tab. Opens tab in the background so the browser isn't constantly interrupted when we close&open a tab
 function newTab(url)
-{
-    //win = window.open(url, '_blank');
-    //win.focus()
+{   
     chrome.tabs.create({url: url, active: false});
+    console.log("Setting new tab to " + url)
 }
 
 //Return the list of streamers with drops enabled for the corresponding day
