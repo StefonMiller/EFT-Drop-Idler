@@ -14,8 +14,8 @@ chrome.runtime.onInstalled.addListener(function()
 
 //Set a routine to run every 30 minutes
 chrome.alarms.create("1min", {
-    delayInMinutes: 30,
-    periodInMinutes: 30
+    delayInMinutes: 1,
+    periodInMinutes: 1
   });
   
   chrome.alarms.onAlarm.addListener(function(alarm) 
