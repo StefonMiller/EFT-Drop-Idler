@@ -1,3 +1,8 @@
+//Initialze plugin on browser startup
+chrome.windows.onCreated.addListener(function() 
+{
+    initializePlugin();
+});
 
 //Create listener to initialize plugin when it is re-enabled
 chrome.management.onEnabled.addListener(function()
@@ -165,8 +170,27 @@ function checkOnline(channels, token)
 //Open a url in a new tab. Opens tab in the background so the browser isn't constantly interrupted when we close&open a tab
 function newTab(url)
 {   
-    chrome.tabs.create({url: url, active: false});
-    console.log("Setting new tab to " + url)
+    getTabs().then(
+            function(tbs)
+            {
+                var flag = false;
+                //Loop through each tab, and check if any of them are the current stream we are supposed to have open
+                for(i = 0; i < tbs.length; i++)
+                {
+                    //If the tab we are supposed to have open is still running, close it.
+                    if(tbs[i].url === url)
+                    {
+                        console.log("Duplicate tab found, not creating an additional one...")
+                        flag = true;
+                    }
+                }
+                //If the tab was not already opened, open it.
+                if(!flag)
+                {
+                    chrome.tabs.create({url: url, active: false});
+                    console.log("Setting new tab to " + url)
+                }
+            })
 }
 
 //Return the list of streamers with drops enabled for the corresponding day
