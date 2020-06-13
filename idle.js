@@ -59,14 +59,26 @@ chrome.alarms.create("1min", {
 
 function initializePlugin()
 {
-    var today = new Date();
-    var month = today.getMonth() + 1
-    var year = today.getFullYear()
-    var day = today.getDate()
+    //During this event, the time at which new streams have drops enabled is in MSK, so we must use that time when 
+    //determining what time it currently is. Additionally, the time streams switch is at 12:00 MSK so we have to 
+    //keep the date 1 behind until then.
+    var today = new Date().toLocaleString("ru-RU", {timeZone: "Europe/Moscow"});
+    totalArgs = today.split(',');
+    timeArgs = totalArgs[1].split(':');
+    dateArgs = totalArgs[0].split('.')
+    day = parseInt(dateArgs[0])
+    month = parseInt(dateArgs[1])
+    year = parseInt(dateArgs[2])
+    hour = parseInt(timeArgs[0])
 
-    if(month == 6 && year == 2020)
+    if(hour < 12)
     {
-        console.log("In correct date range...");
+        console.log("Not 12 MSK yet, keeping day from incrementing...")
+        day--;
+    }
+    if(month == 6 && year == 2020) 
+    {
+        console.log("Date is " + month, day, year, hour);
         channels = getStreams(day);
         if(channels == "")
         {
