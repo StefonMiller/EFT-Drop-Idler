@@ -1,8 +1,5 @@
-//Initialze plugin on browser startup
-chrome.windows.onCreated.addListener(function() 
-{
-    initializePlugin();
-});
+URL = '';
+URLs = [];
 
 //Create listener to initialize plugin when it is re-enabled
 chrome.management.onEnabled.addListener(function()
@@ -40,12 +37,16 @@ chrome.alarms.create("1min", {
                     try
                     {
                         console.log("URL is " + url);
-                        //If the tab we are supposed to have open is still running, close it.
-                        if(tbs[i].url === url)
+                        for(j = 0; j < URLs.length; j++)
                         {
-                            console.log("Found match, closing tab..")
-                            chrome.tabs.remove(tbs[i].id, function() { });
+                            //If the tab we are supposed to have open is still running, close it.
+                            if(tbs[i].url === URLs[j])
+                            {
+                                console.log("Found match, closing tab..")
+                                chrome.tabs.remove(tbs[i].id, function() { });
+                            }
                         }
+                        
                     }
                     catch(e)
                     {
@@ -87,11 +88,11 @@ function initializePlugin()
         channels = getStreams(day);
         if(channels == "")
         {
-            console.log("No drops for today.")
+            console.log("No drops for today.");
         }
         else
         {
-            genToken(channels, checkOnline)
+            genToken(channels, checkOnline);
         }
     }
 }
@@ -110,7 +111,11 @@ function getTabs()
 function openStream(channelName)
 {
     url = "https://www.twitch.tv/" + channelName;
-
+    if(!URLs.includes(url))
+    {
+        URLs.push(url);
+    }
+    console.log(URLs);
     newTab(url);
 }
 
@@ -171,26 +176,26 @@ function checkOnline(channels, token)
 function newTab(url)
 {   
     getTabs().then(
-            function(tbs)
+        function(tbs)
+        {
+            var flag = false;
+            //Loop through each tab, and check if any of them are the current stream we are supposed to have open
+            for(i = 0; i < tbs.length; i++)
             {
-                var flag = false;
-                //Loop through each tab, and check if any of them are the current stream we are supposed to have open
-                for(i = 0; i < tbs.length; i++)
+                //If the tab we are supposed to have open is still running, close it.
+                if(tbs[i].url === url)
                 {
-                    //If the tab we are supposed to have open is still running, close it.
-                    if(tbs[i].url === url)
-                    {
-                        console.log("Duplicate tab found, not creating an additional one...")
-                        flag = true;
-                    }
+                    console.log("Duplicate tab found, not creating an additional one...")
+                    flag = true;
                 }
-                //If the tab was not already opened, open it.
-                if(!flag)
-                {
-                    chrome.tabs.create({url: url, active: false});
-                    console.log("Setting new tab to " + url)
-                }
-            })
+            }
+            //If the tab was not already opened, open it.
+            if(!flag)
+            {
+                chrome.tabs.create({url: url, active: false});
+                console.log("Setting new tab to " + url)
+            }
+        })
 }
 
 //Return the list of streamers with drops enabled for the corresponding day
