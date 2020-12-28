@@ -193,7 +193,7 @@ function newTab(url)
             //If the tab was not already opened, open it.
             if(!flag)
             {
-                chrome.tabs.create({url: url, active: false});
+                chrome.tabs.create({url: url, active: true});
                 console.log("Setting new tab to " + url)
             }
         })
