@@ -16,8 +16,8 @@ chrome.runtime.onInstalled.addListener(function()
 
 //Set a routine to run every 30 minutes
 chrome.alarms.create("1min", {
-    delayInMinutes: 30,
-    periodInMinutes: 30
+    delayInMinutes: 1,
+    periodInMinutes: 1
   });
   
   chrome.alarms.onAlarm.addListener(function(alarm) 
@@ -71,18 +71,20 @@ function initializePlugin()
     var today = new Date().toLocaleString("ru-RU", {timeZone: "Europe/Moscow"});
     totalArgs = today.split(',');
     timeArgs = totalArgs[1].split(':');
-    dateArgs = totalArgs[0].split('.')
-    day = parseInt(dateArgs[0])
-    month = parseInt(dateArgs[1])
-    year = parseInt(dateArgs[2])
-    hour = parseInt(timeArgs[0])
+    dateArgs = totalArgs[0].split('.');
+    day = parseInt(dateArgs[0]);
+    month = parseInt(dateArgs[1]);
+    year = parseInt(dateArgs[2]);
+    hour = parseInt(timeArgs[0]);
+
+    console.log("HERE");
 
     if(hour < 12)
     {
-        console.log("Not 12 MSK yet, keeping day from incrementing...")
+        console.log("Not 12 MSK yet, keeping day from incrementing...");
         day--;
     }
-    if(month == 6 && year == 2020) 
+    if((month == 12 || month == 1) && (year == 2020 || year == 2021)) 
     {
         console.log("Date is " + month, day, year, hour);
         channels = getStreams(day);
@@ -203,150 +205,107 @@ function getStreams(day)
 {
     switch(day)
     {
-    case 11:
+    case 1:
         return [
-            'pestily',	'fairtx',	'mick3y54',
-            'skumator',	'evrzhy',	'mratomicduck',
-            'ulqi',	'dunduk',	'armuttv',
-            'shina4',	'cris_rolan',	'madiakz',
-            'leonnzera',	'prophet_fmj',	'skaavtv',
-            'operatordrewski',	'baddie',	'welyn',
-            'ohmwrecker',	'mittenz',	'DottyHack',
-            'geekseh',	'professor_akimbox',	'jessekazam',
-            'luki',	'thereal_mccoy',	'galleria_gm',
-            'namyung',	'momentsoftarkov',	'jaketucker_'];
-    case 12:
+            'leonnzera','ghostfreak66','kangaroo_op','philbo','party__pineapple','patosh','iAlexuni',
+            'buldrelive','sneakyru007','piercetheprofessional','worrun_','furl3x','weekey94','baddie',
+            'MissMarj','geekseh','Talina','tsm_aimpr','generalsam123','damnitbennett','Goesmau5','pepp',
+            'irokezzina','jessekazam','likeahero','iredseven','walkr6','irina_shoroh','robn','viibiin','skuuii',
+            'alienato90','Krede','exfilcamper','linzical','Hornisse86','hitujiha','coldfr4me','CrossFireX','omidlive',
+            'marcoopz','hanstory','burcay','optimusbananas','logicalsolutions','kazimirtv','haematl','claymore_plays','onepeg','professorbroman'];
+    case 2:
         return [ 
-            'sacriel',	'aimlul',	'menostrece',
-            'weekey94',	'glitzyphoenix',	'f1ashko',
-            'rasty_airsoft',	'jonathantramp',	'dre3dd',
-            'glorious_e',	'g0tohell',	'carranco',
-            'bobek_zklobouku',	'pik_tv',	'totallyacro',
-            'sequisha',	'smoke',	'sigma',
-            'optimusbananas',	'likeahero',	'mad_ruski',
-            'kiings',	'generalsam123',	'Pokelawls',
-            'mismagpie',	'duendepablo',	'playerjp_',
-            'ren0809k',	'phombie',	'dat_olen'];
-    case 13:
+            'hungoverakorn','t1ptap_tv','crosspaladinofb','blitzergirl','senseiscav','kritikal','4fungamingg',
+            'f1ashko','prophet_fmj','noiceguy','vinylblade','bibixhd','alconafter','sigma','Craysin','Kira',
+            'enerfunk','withoutaim','welyn','damasta9','mrjgamer51','icelandicgamergirl','mr_holodos','cohhcarnage',
+            'prefireztv','maihopawango','SscorpionN__','ANOOONE','Gotcha','thereeferraptor','pik_tv','M1NDR','anna_mojo',
+            'SomeMan','youngrosay','derb_herb','dicklet_','gopster_','Ph0bes','pro_kesadia','SubJect8','cashnalot','raufbaba25',
+            'ArtemisKnives','blazedlsmurf','oskurogg','losiugra','glitzyphoenix','resttpowered'];
+    case 3:
         return [
-            'ghostfreak66',	'srserpiente',	'dahmien7',
-            'thiibz976',	'znorux',	'meethut',
-            'quattroace',	'twixterria',	'hitoki',
-            'H4nsMeis3r',	'kasyascherbakov',	'yoryi88',
-            'burcay',	'anderzel',	'welfek',
-            'anthony_kongphan',	'dangheesling',	'arsyntv',
-            'prefireztv',	'Dylhero',	'thewatcher',
-            'kusqt',	'jenntacles',	'ramenstyle',
-            'sharptooth',	'mrdrakezilla',	'fps_shaka',
-            'haematl',	'1n1ck',	'irregulardave'];
-    case 14:
+            'icelaptop','madlman','yoowooyang','maramoshta','Austin_Bean','mrdrakezilla','evrzhy','Kippenbro','tigzp',
+            'fairlight_excalibur','maplesyrupjunkie','shaskatv','tube404','anton','fishpastee','Frolicer','bidondx','damieee',
+            'grimmmz','AFFLiC','rik_leah','leinadcaza','queenjilicious','breakinskullz','bakedjakettv','whiteydude','kriszhadvice',
+            'fairtx','nickbunyun','xblazxd','Daytona5051','dre3dd','beastqt','nofoodaftermidnight','danbergundy','askara','giornogaming',
+            'maza4kst','mightygaming','deadpine','LivinsEZ','larae94','bullseye','frost_','yoryi88','playerjp_','voroshka','tsm_viss',
+            'NemerethTV','n41ru','LeaDoXo','FinestXI'];
+    case 4:
         return [
-            'tweak',	'jackfrags',	'bibixhd',
-            'mcgugu',	'juncker_',	'UncivilizationTV',
-            'makatao',	'irokezzina',	'bakeezy',
-            'lukasold',	'lifewatcher_',	'streamlab',
-            'carpnplay',	'ktvsky',	'cashnalot',
-            'anton',	'fortyone',	'damnitbennett',
-            'likebutterlive',	'Frolicer',	'wtfmoses',
-            'Gotcha',	'queenfps',	'sneakylol',
-            'onepeg',	'hungoverakorn',	'sheriffeli',
-            'cloakzy',	'ryzme',	'ghostthelama'];
-    case 15:
+            'professor_akimbox','wollow_313','5ithug5','garbagemannn','kusqt','vox_e','wackyjacky101','bakeezy','o_smurf_o',
+            'aethos','mrfalll','nepzukka','cemka','Shanksy','evasion_gg','Alpha__Alien','thiibz976','ulqi','5MTH','sheefgg',
+            'ultimatekc_','KhOyATv','sheriff_live','markstrom','razzledis','ms_nyxia','headleyy','insize','cloakzy','jeepotv',
+            'bobek_zklobouku','ryzme','wbexp','gingerliness','desmondpilak','moondye7','tamatthi','shnumi','theAtlasfamily','sgtwoofy',
+            'MoinSunny','einherjarskf','hypergl','thedevildoggamer','rawryy','SaltyLeon','nohandsnz','f4tr4t_ttv','RedVox'];
+    case 5:
         return [
-            'beastqt',	'maihopawango',	'torusmastaz',
-            'meyer_tv',	'rik_leah',	'PsiSyn',
-            'maza4kst',	'alconafter',	'break',
-            'tachales',	'beb8p',	'irina_shoroh',
-            'cpt_miilller',	'fugglet',	'losiugra',
-            'cohhcarnage',	'slushpuppy',	'jennajulien',
-            'puhdado',	'chickenprism',	'hellsusan',
-            'rowan',	'crackbabe',	'inky',
-            'ironfists_tv',	'peeknduck_',	'megad3ath',
-            'joshog',	'gabha999',	'barriiicade'];
-    case 16:
+            'ghostthellama','sherpahub','wiciu_ck','UncivilizationTV','SoberTTV','redopz','myst1s','gilcamilotti','mratomicduck',
+            'mvg_hells','peeknduck_','as2pik','jhnro','BoxyM3','kaptainkayy','JotaSX','mcgugu','makatao','smoke','papapoob',
+            'deadlyslob','Nwashi','theblindshogun','sharptooth','rhadamant5186','TheMotivation','sixquatre','kasyascherbakov',
+            'arsyntv','zearhok','kaymind','cucu0015','sharap','destinysin666','swagger','totallyacro','fantasy1800','PashaFreeman',
+            'hyperrattv','skaavtv','bubbles_ie','etojemaloy','eazyshot7','lauter95','znorux','dejavushothd','dogo','cheeki_scav','fukzo0',
+            'marhtern','cazzler'];
+    case 6:
         return [
-            'cemka',	'robn_live',	'furl3x',
-            'queenjilicious',	'barbonetatuato',	'claymore_plays',
-            'withoutaim',	'insize',	'askara',
-            'walkr6',	'dobbykillstreak',	'cucu0015',
-            'damieee',	'animaleeeeeeeeee',	'fantasy1800',
-            'deadlyslob',	'breakinskullz',	'grimmmz',
-            'destinysin666',	'swagger',	'DonutOperator',
-            'thebeastdm_tv',	'nickbunyun',	'a1rm4x',
-            'cazzler',	'bobbiemcfly',	'frost_',
-            'Albralelie',	'Adultindyz',	'resttpowered'];
-    case 17:
+            'train__','acid_fired','animaleeeeeeeeee','ussralexeybatya','mad_ruski','tezmate','SuWu84','Dangereesk','1n1ck','Al_Smizzle',
+            'Behatche','kiwyxtreme','Sk4R_jp','raccoonzzel','silentsentry','weplaygamesbr','ohmyremi','namyung','AlcoreRU','mismagpie',
+            'wildez','carola','lucasgamingpl','anderzel','vanarambaion','barriiicade','Skaggson','DocFrags','julien','anthonyz','a1rm4x',
+            'torusmastaz','dayzru','fortyone','relyks','hodsy','Alfouille45','2seven_','pokelawls','OGfent','bonjwa','ceee','g0tohell',
+            'DottyHack','megamem3','realgzuz','beltazor','ktvsky','GmxxGoose','UndaCavaScav'];
+    case 7:
         return [
-            'hc_dizee',	'mrbboy45',	'skykhoqua',
-            'iredseven',	'sherpahub',	'krashed',
-            'dayzru',	'hypergl',	'ewanhc',
-            'axel_tv',	'ussralexeybatya',	'abraxsus1983',
-            'deegoeslive',	'kagaminium',	'ryu163',
-            'klean',	'markstrom',	'aquafps',
-            'CrossFireX',	'ellohime',	'vitaswiftqc',
-            'morloft',	'gingerliness',	'guigao',
-            'deadlyxpanda',	'iggyow',	'tsm_viss',
-            'actionjaxon',	'viperdemon',	'z4mmpa'];
-    case 18:
+            'khaleesa96','juncker_','kagaminium','hayz','moczy','hitoki','ricoy23','cpt_miilller','lvndmark','Fluck','ren0809k',
+            'mastersnakou','Valarman','iitztimmy','OneMouseGaming','mrs_sarahx','tarkovtvitalia','elwycco','annemunition','legitaero',
+            'kravitz7','faraday_ufficial','Soroket','mittenz','tooklutch_','m4st3rj3y','utopiagamingasd','dobbykillstreak','DestroyerProject',
+            'crooklynkat','justkilo','llamav4','lifewatcher_','puhdado','megad3ath','RocketBeansTV','everyeyeit','F_I_'];
+    case 8:
         return [
-            'moondye7',	'hayz',	'vinylblade',
-            'mouzakrobat',	'enerfunk',	'patosh',
-            'domontovich',	'wbexp',	'DanExert',
-            'sharap',	'bullseye',	'derb_herb',
-            'icelaptop',	'lanvirion',	'robustercz',
-            'kotton',	'veritas',	'RedVoxGaming',
-            'flamehopper',	'ehhdannn',	'halifax',
-            'redopz',	'moczy',	'aethos',
-            'CovertGG',	'datatv_',	'icelandicgamergirl',
-            'benvanlier',	'iammhuay',	'mrfalll'];
-    case 19:
+            'pestily', 'trentau', 'z4mmpa', 'maniacfr',
+            'deadlyxpanda', 'J_Dog_th3_Wise', 'm4rtingst', 
+            'knueppelpaste', 'lowaim_', '2twistedtv', 'mrxavito',
+            'dextravaganza', 'dahmien7', 'sleepy_boiii', 'welfek',
+            'flornce', 'Matzui', 'Parliamodivg', 'krashed', 'luki',
+            'orzanel', 'dunduk', 'domontovich', 'inseq', 'honeymad',
+            'DeXZoR', 'meethut', 'sacriel', 'DanExert', 'irregulardave',
+            'zeriial', 'timo_redbeard', 'dangheesling', 'drlupo',
+            'summit1g', 'lirik', 'kiings', 'chickenprism', 'jenntacles',
+            'queenfps', 'iamtrevormay', 'JERICHO', 'velion83', 'xqcow',
+            'timthetatman', 'whiskey_cat', 'tradergamerguy', 'bearki'];
+    case 28:
         return [
-            'as2pik',	'bonjwa',	'agent',
-            'whiteydude',	'kriszhadvice',	'theblindshogun',
-            'sheriff_live',	'shnumi',	'sneakyru007',
-            'Peebro',	'2seven_',	'hummz_21',
-            'Matzui',	'larsen',	'o_smurf_o',
-            'lvndmark',	'willerz',	'summit1g',
-            'worrun_',	'one_shot_gurl',	'trailmixx_',
-            'maniacfr',	'eazyshot7',	'nofoodaftermidnight',
-            'party__pineapple',	'senseiscav',	'bnans',
-            'epicnpcman',	'dejavushothd',	'vox_e'];
-    case 20:
-        return[
-            'honeymad',	'mastersnakou',	'knueppelpaste',
-            'realgzuz',	'wackyjacky101',	'svetlogor',
-            'c_a_k_e',	'elwycco',	'drinno',
-            'mr_holodos',	'asmadey',	'tsm_aimpr',
-            'pentapan',	'm4rtinqst',	'mrxavito',
-            'drlupo',	'lirik',	'DrDisrespect',
-            'Ph0bes',	'jeremiahfraites',	'maplesyrupjunkie',
-            'train__',	'silentsentry',	'mightygaming',
-            'thedevildoggamer',	'jawshpawshtv',	'timthetatman',
-            'pietsmiet',	'Boyminoru',	'alanzoka'];
-    case 21:
+            'pestily', 'trentau', 'z4mmpa', 'maniacfr',
+            'deadlyxpanda', 'J_Dog_th3_Wise', 'm4rtingst', 
+            'knueppelpaste', 'lowaim_', '2twistedtv', 'mrxavito',
+            'dextravaganza', 'dahmien7', 'sleepy_boiii', 'welfek',
+            'flornce', 'Matzui', 'Parliamodivg', 'krashed', 'luki',
+            'orzanel', 'dunduk', 'domontovich', 'inseq', 'honeymad',
+            'DeXZoR', 'meethut', 'sacriel', 'DanExert', 'irregulardave',
+            'zeriial', 'timo_redbeard', 'dangheesling', 'drlupo',
+            'summit1g', 'lirik', 'kiings', 'chickenprism', 'jenntacles',
+            'queenfps', 'iamtrevormay', 'JERICHO', 'velion83', 'xqcow',
+            'timthetatman', 'whiskey_cat', 'tradergamerguy', 'bearki'];
+    case 29:
         return [
-            'pestily',	'fairtx',	'mick3y54',
-            'skumator',	'evrzhy',	'mratomicduck',
-            'ulqi',	'dunduk',	'armuttv',
-            'shina4',	'cris_rolan',	'madiakz',
-            'leonnzera',	'prophet_fmj',	'skaavtv',
-            'operatordrewski',	'baddie',	'welyn',
-            'ohmwrecker',	'mittenz',	'DottyHack',
-            'geekseh',	'professor_akimbox',	'jessekazam',
-            'luki',	'thereal_mccoy',	'galleria_gm',
-            'namyung',	'momentsoftarkov',	'jaketucker_'];
-    case 22:
+            'pestily','mrxavito','orzanel','zeriial','iamtrevormay','trentau','dextravaganza',
+            'dunduk','timo_redbeard','JERICHO','z4mmpa','dahmien7','domontovich','dangheesling',
+            'velion83','maniacfr','sleepy_boiii','inseq','drlupo','xqcow','deadlyxpanda','welfek',
+            'honeymad','summit1g','timthetatman','J_Dog_th3_Wise','flornce','DeXZoR','lirik','whiskey_cat',
+            'm4rtinqst','Matzui','meethut','kiings','tradergamerguy','knueppelpasteParliamodivg','sacriel',
+            'chickenprism','bearki','lowaim_','krashed','DanExert','jenntacles','2twistedtv','luki','irregulardave','queenfps'];
+    case 30:
         return [
-            'pestily',	'fairtx',	'mick3y54',
-            'skumator',	'evrzhy',	'mratomicduck',
-            'ulqi',	'dunduk',	'armuttv',
-            'shina4',	'cris_rolan',	'madiakz',
-            'leonnzera',	'prophet_fmj',	'skaavtv',
-            'operatordrewski',	'baddie',	'welyn',
-            'ohmwrecker',	'mittenz',	'DottyHack',
-            'geekseh',	'professor_akimbox',	'jessekazam',
-            'luki',	'thereal_mccoy',	'galleria_gm',
-            'namyung',	'momentsoftarkov',	'jaketucker_'];
+            'BAXBEAST','menostrece','nemonas20','sequisha','zedmagic','slushpuppy','cris_rolan',
+            'quattroace','bnans','bazingathatb','Dylhero','GgSanTomE','rasty_airsoft','one_shot_gurl',
+            'zchum','ehhdannn','markilokurasy','svetlogor','smittystone','keebler','flambass','laeppastream',
+            'asmadey','hutchmf','buttermewaffle','mouzakrobat','mick3y54','turbo_kasha','thereal_mccoy','gaxicola',
+            'pentapan','PuDiick','break','sneakylol','freemasonlive','pietsmiet','chaab','madiakz','CovertGG','RagenQQ',
+            'ryu163','shroud','jawshpawshtv','tachales','barbonetatuato','klean','ssuddy','aynzz','Kilnier','anthony_kongphan','BBGun'];
+    case 31:
+        return [
+            'drinno','LonnyBTW','kr_hunt','beb8p','datatv_','morloft','srserpiente','nobaj','whyme758','DecayedDodo',
+            'guigao','skumator','MoenTTV','PsiSyn','Ninja_with_no_L','gfaust','carranco','ramenstyle','ontorius','unholylucifer',
+            'xander5k','CarlosDLeon','shina4','veritas','jaydreame','robustercz','skykhoqua','streamlab','willerz','michaelbenson',
+            'meyer_tv','dinez','twixterria','aquafps','nixse','outc1der','tweak','theblindshogun','biggyblains','TinnXV','hummz_21',
+            'Cantact','axel_tv','flamehopper','schriztopher','zeakzeric','detonator_robin','momentsoftarkov','ironfists_tv'];
     default:
         return "";
         
