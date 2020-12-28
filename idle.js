@@ -70,14 +70,13 @@ function initializePlugin()
     //keep the date 1 behind until then.
     var today = new Date().toLocaleString("ru-RU", {timeZone: "Europe/Moscow"});
     totalArgs = today.split(',');
+    console.log(totalArgs);
     timeArgs = totalArgs[1].split(':');
     dateArgs = totalArgs[0].split('.');
     day = parseInt(dateArgs[0]);
     month = parseInt(dateArgs[1]);
     year = parseInt(dateArgs[2]);
     hour = parseInt(timeArgs[0]);
-
-    console.log("HERE");
 
     if(hour < 12)
     {
@@ -86,7 +85,7 @@ function initializePlugin()
     }
     if((month == 12 || month == 1) && (year == 2020 || year == 2021)) 
     {
-        console.log("Date is " + month, day, year, hour);
+        console.log("Date is ", month, day, year, hour);
         channels = getStreams(day);
         if(channels == "")
         {
