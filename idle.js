@@ -143,7 +143,7 @@ function genToken(channels, callback)
 {
     var token;
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://id.twitch.tv/oauth2/token?client_id=1swbh92vaxjly24it3cd07xc0du1e4&client_secret=7b0op63c2799ivqnx3ttfxeh2na2dz&grant_type=client_credentials", true);
+    xhr.open("POST", "twitch_key", true);
     xhr.send();
     xhr.onload = function() 
     {
